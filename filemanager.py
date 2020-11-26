@@ -1,6 +1,20 @@
 import sys
 import os
 
+# This function prompts for a valid directory path.
+# If the entered path is invalid, it will keep prompting the user to input a valid path
+def verify_path():
+    my_path = input('Enter a directory path:')
+    if os.path.isdir(my_path):
+        return my_path
+    else:
+        print("Please enter a valid path!\n ")
+        dir_path = verify_path()
+        return dir_path
+
+def traverse_directory(my_path):
+    print("\n")    
+    
 def print_menu():
     print("\n")
     print("\t***************************")
