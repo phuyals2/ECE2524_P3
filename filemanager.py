@@ -23,6 +23,21 @@ def traverse_directory(my_path):
             print(' {}{}'.format(bulleted, "- " + i))
     print("----------------------------------------------------------\n") 
     
+    
+ def rename_files(path, new_name, file_type):
+    check = False
+    temp_files = os.listdir(path)  # lists the files in the specified path
+    files = sorted(temp_files)
+
+    for index, file in enumerate(files):
+        if file.endswith(file_type):  # Checking if the filetype exists in the directory
+            os.rename(os.path.join(path, file), os.path.join(path, ''.join([new_name, str(index), "." + file_type])))
+            check = True
+        else:
+            check = False
+    return check  
+
+
  def arrange_by_size(path):
     os.chdir(path)
     # creating a dictionary
@@ -39,8 +54,8 @@ def traverse_directory(my_path):
 
     print("------------------------------------------------------------------------\n")   
           
-          
-  def arrange_by_time(path):
+            
+ def arrange_by_time(path):
     my_list = (os.path.join(path, f) for f in os.listdir(path))  # listing the files in the specified path
     my_list = ((os.stat(path), path) for path in my_list)  # listing the files with stat
     my_list = ((stat[ST_CTIME], path) for stat, path in my_list if S_ISREG(stat[ST_MODE]))
@@ -49,6 +64,7 @@ def traverse_directory(my_path):
     for my_time, path in sorted(my_list):
         print(f"{os.path.basename(path):<40}{time.ctime(my_time)} ")
     print("-----------------------------------------------------------------------\n")
+          
     
 def print_menu():
     print("\n")
@@ -104,7 +120,19 @@ def main():
             arrange_by_time(my_path)
 
         elif user_input == "4":
-            print("******-- Rename files --******")
+            print("******-- Rename files --******") 
+             my_path = verify_path()
+            file_type = input("Enter the file(s) extension: ")
+            new_name = input("Enter the new name for files: ")
+            check = rename_files(my_path, new_name, file_type)
+
+            if check is True:
+                print(" All the files of type " + file_type + " have been successfully renamed!!\n")
+                print("----------------------------------------------------------\n")
+            elif check is False:
+                print(" !!The specified file type does not exist in the provided directory!! ")
+                print("----------------------------------------------------------\n")
+          
            
         elif user_input == "5":
             print("******-- Delete files --******")
