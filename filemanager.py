@@ -13,7 +13,15 @@ def verify_path():
         return dir_path
 
 def traverse_directory(my_path):
-    print("\n")    
+    print("\n")  
+    for root, dirs, files in os.walk(my_path):
+        level = root.replace(my_path, '').count(os.sep)
+        shift = ' ' * 4 * level
+        print(' {}{}: '.format(shift, "Inside --> " + os.path.basename(root)))
+        bulleted = ' ' * 6 * (level + 2)
+        for i in files:
+            print(' {}{}'.format(bulleted, "- " + i))
+    print("----------------------------------------------------------\n") 
     
 def print_menu():
     print("\n")
