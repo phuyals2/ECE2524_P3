@@ -12,6 +12,7 @@ def verify_path():
         dir_path = verify_path()
         return dir_path
 
+    
 def traverse_directory(my_path):
     print("\n")  
     for root, dirs, files in os.walk(my_path):
@@ -38,6 +39,22 @@ def traverse_directory(my_path):
         else:
             check = False
     return verify  
+
+
+def delete_files(path, file_type):
+    check = False
+    verify = False
+    test = os.listdir(path)
+
+    for item in test:
+        if item.endswith(file_type):
+            os.remove(os.path.join(path, item))
+            check = True
+            verify = True
+        else:
+            check = False
+
+    return verify
 
 
  def arrange_by_size(path):
@@ -138,6 +155,16 @@ def main():
            
         elif user_input == "5":
             print("******-- Delete files --******")
+            my_path = verify_path()
+            file_type = input("Enter the file(s) extension: ")
+            check = delete_files(my_path, file_type)
+            if check is True:
+                print(" All the files of type " + file_type + " have been successfully deleted!!\n")
+                print("----------------------------------------------------------\n")
+            elif check is False:
+                print(" !!The specified file type does not exist in the provided directory!! ")
+                print("----------------------------------------------------------\n")
+
             
         elif user_input == "6":
             print("Exiting...Thank You!!")
