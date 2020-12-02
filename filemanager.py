@@ -23,6 +23,22 @@ def traverse_directory(my_path):
             print(' {}{}'.format(bulleted, "- " + i))
     print("----------------------------------------------------------\n") 
     
+ def arrange_by_size(path):
+    os.chdir(path)
+    # creating a dictionary
+    my_dictionary = {}
+    print("Arranging by size: \n")
+    for files in os.listdir(path):
+        if os.path.isfile(files):
+            my_dictionary[files] = os.stat(files).st_size  # this gives size in bytes
+
+    print(f'\tFiles {6 * "  "}\t File Size \n ')
+
+    for file, size in sorted(my_dictionary.items(), key=lambda s: (s[1], s[0])):
+        print(f"{file:<30} {size / 1000:.03f} KB")
+
+    print("------------------------------------------------------------------------\n")   
+    
 def print_menu():
     print("\n")
     print("\t***************************")
