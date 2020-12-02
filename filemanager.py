@@ -38,6 +38,17 @@ def traverse_directory(my_path):
         print(f"{file:<30} {size / 1000:.03f} KB")
 
     print("------------------------------------------------------------------------\n")   
+          
+          
+  def arrange_by_time(path):
+    my_list = (os.path.join(path, f) for f in os.listdir(path))  # listing the files in the specified path
+    my_list = ((os.stat(path), path) for path in my_list)  # listing the files with stat
+    my_list = ((stat[ST_CTIME], path) for stat, path in my_list if S_ISREG(stat[ST_MODE]))
+
+    print(f'\tFiles {6 * "  "}\t\t Date/Time created \n ')
+    for my_time, path in sorted(my_list):
+        print(f"{os.path.basename(path):<40}{time.ctime(my_time)} ")
+    print("-----------------------------------------------------------------------\n")
     
 def print_menu():
     print("\n")
@@ -89,6 +100,8 @@ def main():
         elif user_input == "3":
             print(" \n")
             print("******-- Arranging files by date/time --*****")
+            my_path = verify_path()
+            arrange_by_time(my_path)
 
         elif user_input == "4":
             print("******-- Rename files --******")
