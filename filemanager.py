@@ -26,6 +26,7 @@ def traverse_directory(my_path):
     
  def rename_files(path, new_name, file_type):
     check = False
+    verify = False
     temp_files = os.listdir(path)  # lists the files in the specified path
     files = sorted(temp_files)
 
@@ -33,9 +34,10 @@ def traverse_directory(my_path):
         if file.endswith(file_type):  # Checking if the filetype exists in the directory
             os.rename(os.path.join(path, file), os.path.join(path, ''.join([new_name, str(index), "." + file_type])))
             check = True
+            verify = True
         else:
             check = False
-    return check  
+    return verify  
 
 
  def arrange_by_size(path):
