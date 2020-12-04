@@ -12,7 +12,9 @@ def verify_path():
         dir_path = verify_path()
         return dir_path
 
-    
+
+# This function is called when option 1 is selected from the menu.
+# It uses the os module to recursively traverse the user provided directory.    
 def traverse_directory(my_path):
     print("\n")  
     for root, dirs, files in os.walk(my_path):
@@ -23,8 +25,13 @@ def traverse_directory(my_path):
         for i in files:
             print(' {}{}'.format(bulleted, "- " + i))
     print("----------------------------------------------------------\n") 
-    
-    
+   
+
+ # This is the function called to rename files. Parameters passed are the directory path, new name, and file extension.
+ # This function will check if a file of given extension exists in a directory or not.
+          # - If it exists, it will rename the file with the name passed by the user.
+          #  - It will also append numbers at the end of the new name starting from 0 ( This will depend on file's postion inside the for loop).
+          # - If it does not exist, it will simply return false     
  def rename_files(path, new_name, file_type):
     check = False
     verify = False
@@ -40,7 +47,10 @@ def traverse_directory(my_path):
             check = False
     return verify  
 
-
+# This is the function called when the user wants to delete a file of certain extension from a folder. 
+# The parameters aree directory path and file extenstion.
+     # - If a file of certain extension exists, it will simply delete that file.
+     # - If it doesn't exist, it will return a boolean value of false. 
 def delete_files(path, file_type):
     check = False
     verify = False
@@ -56,10 +66,11 @@ def delete_files(path, file_type):
 
     return verify
 
-
+  # This function will arrange the files a given directory based on the file size and print them out in the console.
+  # It will arrange files in ascending order.
  def arrange_by_size(path):
     os.chdir(path)
-    # creating a dictionary
+    # creating a dictionary to hold files
     my_dictionary = {}
     print("Arranging by size: \n")
     for files in os.listdir(path):
@@ -68,12 +79,13 @@ def delete_files(path, file_type):
 
     print(f'\tFiles {6 * "  "}\t File Size \n ')
 
-    for file, size in sorted(my_dictionary.items(), key=lambda s: (s[1], s[0])):
-        print(f"{file:<30} {size / 1000:.03f} KB")
+    for file, size in sorted(my_dictionary.items(), key=lambda s: (s[1], s[0])):   # This will sort the files in required order
+        print(f"{file:<30} {size / 1000:.03f} KB")  # Formatting the output
 
     print("------------------------------------------------------------------------\n")   
           
-            
+  
+  # This function will arrange the files in the given directory by the date/time they were created and display them in the console        
  def arrange_by_time(path):
     my_list = (os.path.join(path, f) for f in os.listdir(path))  # listing the files in the specified path
     my_list = ((os.stat(path), path) for path in my_list)  # listing the files with stat
@@ -84,7 +96,7 @@ def delete_files(path, file_type):
         print(f"{os.path.basename(path):<40}{time.ctime(my_time)} ")
     print("-----------------------------------------------------------------------\n")
           
-    
+ # This function simply prints the welcome screen menu   
 def print_menu():
     print("\n")
     print("\t***************************")
@@ -101,7 +113,7 @@ def print_menu():
           "\t6] - Exit\n"
           "=================================================\n")
 
-
+# This is the main function which will call different functions above based on the task selected by the user.
 def main():
     print_menu()
     while True:
