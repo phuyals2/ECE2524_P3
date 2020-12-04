@@ -4,7 +4,7 @@ Project for ECE 2524
 
 ## I have made a small change from the original proposal. 
 
-The program will no longer be required to be invoked with additional command-line arguments as mentioned before. 
+The program will no longer be invoked with additional command-line arguments as mentioned before. 
 Instead, I have implemented a menu based system in order to make it easier for the user to interface with the program.
 I felt the original implementation could be difficult to understand for a novice user, so I changed it to be more interactive.
 
