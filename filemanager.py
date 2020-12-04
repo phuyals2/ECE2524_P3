@@ -1,5 +1,7 @@
 import sys
 import os
+import time
+from stat import S_ISREG, ST_CTIME, ST_MODE
 
 # This function prompts for a valid directory path.
 # If the entered path is invalid, it will keep prompting the user to input a valid path
@@ -32,7 +34,7 @@ def traverse_directory(my_path):
           # - If it exists, it will rename the file with the name passed by the user.
           #  - It will also append numbers at the end of the new name starting from 0 ( This will depend on file's postion inside the for loop).
           # - If it does not exist, it will simply return false     
- def rename_files(path, new_name, file_type):
+def rename_files(path, new_name, file_type):
     check = False
     verify = False
     temp_files = os.listdir(path)  # lists the files in the specified path
@@ -66,9 +68,9 @@ def delete_files(path, file_type):
 
     return verify
 
-  # This function will arrange the files a given directory based on the file size and print them out in the console.
-  # It will arrange files in ascending order.
- def arrange_by_size(path):
+# This function will arrange the files a given directory based on the file size and print them out in the console.
+# It will arrange files in ascending order.
+def arrange_by_size(path):
     os.chdir(path)
     # creating a dictionary to hold files
     my_dictionary = {}
@@ -86,7 +88,7 @@ def delete_files(path, file_type):
           
   
   # This function will arrange the files in the given directory by the date/time they were created and display them in the console        
- def arrange_by_time(path):
+def arrange_by_time(path):
     my_list = (os.path.join(path, f) for f in os.listdir(path))  # listing the files in the specified path
     my_list = ((os.stat(path), path) for path in my_list)  # listing the files with stat
     my_list = ((stat[ST_CTIME], path) for stat, path in my_list if S_ISREG(stat[ST_MODE]))
@@ -152,7 +154,7 @@ def main():
 
         elif user_input == "4":
             print("******-- Rename files --******") 
-             my_path = verify_path()
+            my_path = verify_path()
             file_type = input("Enter the file(s) extension: ")
             new_name = input("Enter the new name for files: ")
             check = rename_files(my_path, new_name, file_type)
